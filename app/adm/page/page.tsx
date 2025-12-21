@@ -2,12 +2,13 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import RichTextEditor from "../../../components/RichTextEditor";
+import { notify } from "../../../components/common/notify";
 
 export default function PageEditor() {
   const searchParams = useSearchParams();
   const blogId = searchParams.get("id");
   const isEdit = !!blogId;
-  
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -20,29 +21,31 @@ export default function PageEditor() {
 
   const handleSave = async () => {
     if (!title.trim() || !content.trim()) {
-      alert('Please fill in both title and content');
+      notify.warning("Please fill in both title and content");
       return;
     }
 
     try {
-      const method = isEdit ? 'PUT' : 'POST';
-      const body = isEdit 
-        ? { id: blogId, title, content }
-        : { title, content };
+      const method = isEdit ? "PUT" : "POST";
+      const body = isEdit ? { id: blogId, title, content } : { title, content };
 
-      const response = await fetch('/api/destinations', {
+      const response = await fetch("/api/destinations", {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       });
 
       if (response.ok) {
-        window.location.href = '/adm';
+        notify.success(
+          isEdit ? "Page updated successfully!" : "Page created successfully!"
+        );
+        setTimeout(() => (window.location.href = "/adm"), 1000);
       } else {
-        alert('Failed to save page');
+        notify.error("Failed to save page");
       }
     } catch (error) {
-      alert('Error saving page');
+      console.error(error);
+      notify.error("Error saving page");
     }
   };
 
@@ -59,7 +62,9 @@ export default function PageEditor() {
         <div className="bg-white rounded-lg shadow p-6">
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Title
+              </label>
               <input
                 type="text"
                 value={title}
@@ -69,11 +74,10 @@ export default function PageEditor() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
-              <RichTextEditor
-                content={content}
-                onChange={setContent}
-              />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Content
+              </label>
+              <RichTextEditor content={content} onChange={setContent} />
             </div>
             <div className="flex gap-4">
               <button

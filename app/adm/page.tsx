@@ -11,7 +11,7 @@ export default function AdminDashboard() {
   const [pages, setPages] = useState<Page[]>([]);
 
   const fetchPages = async () => {
-    const response = await fetch("/api/blogger");
+    const response = await fetch("/api/blogger/page");
     const data = await response.json();
     setPages(data.items);
   };

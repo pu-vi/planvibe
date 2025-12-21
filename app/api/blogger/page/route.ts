@@ -1,4 +1,3 @@
-import { BloggerAPI } from "@/utils/BloggerAPI";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -12,18 +11,17 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const bloggerApi = new BloggerAPI(apiKey, blogId);
-  const maxResults =
-    Number(req.nextUrl.searchParams.get("maxResults")) || 10;
+  const maxResults = Number(req.nextUrl.searchParams.get("maxResults")) || 10;
+  const url = `https://www.googleapis.com/blogger/v3/blogs/${blogId}/pages?key=${apiKey}&maxResults=${maxResults}`;
 
   try {
-    const pages = await bloggerApi.getPages(maxResults);
-    return NextResponse.json(pages);
+    const response = await fetch(url);
+    const data = await response.json();
+    return NextResponse.json(data);
   } catch (error) {
-    console.error(error);
-
+    console.error("Error fetching pages:", error);
     return NextResponse.json(
-      { error: `Failed to fetch pages` },
+      { error: "Failed to fetch pages" },
       { status: 500 }
     );
   }
