@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Destination {
+  id                  Int       @id @default(autoincrement())
+  title               String    @db.VarChar(255)
+  slug                String    @unique @db.VarChar(255)
+  content             String    @db.Text
+  excerpt             String?   @db.Text
+  publishedAt         DateTime? @map("published_at")
+  updatedAt           DateTime  @default(now()) @updatedAt @map("updated_at")
+  
+  // SEO Fields
+  metaTitle           String?   @map("meta_title") @db.VarChar(255)
+  metaDescription     String?   @map("meta_description") @db.Text
+  metaKeywords        String?   @map("meta_keywords") @db.Text
+  canonicalUrl        String?   @map("canonical_url") @db.VarChar(255)
+  
+  // Open Graph / Social Media Fields
+  ogTitle             String?   @map("og_title") @db.VarChar(255)
+  ogDescription       String?   @map("og_description") @db.VarChar(255)
+  ogImageUrl          String?   @map("og_image_url") @db.VarChar(255)
+  
+  // Technical / Indexing
+  robotsNoindex       Boolean   @default(false) @map("robots_noindex")
+  robotsNofollow      Boolean   @default(false) @map("robots_nofollow")
+  
+  // Travel-specific UX
+  featuredImageUrl    String?   @map("featured_image_url") @db.VarChar(255)
+  travelSeason        String?   @map("travel_season") @db.VarChar(50)
+  bestTimeToVisit     String?   @map("best_time_to_visit") @db.VarChar(100)
+  
+  // Blogger details
+  bloggerPageId       String?   @map("blogger_page_id") @db.VarChar(100)
+  bloggerUrl          String?   @map("blogger_url") @db.VarChar(255)
+  bloggerUpdatedAt    DateTime? @map("blogger_updated_at")
+  
+  status              String    @default("draft") @db.VarChar(50)
+  
+  @@map("destinations")
+}

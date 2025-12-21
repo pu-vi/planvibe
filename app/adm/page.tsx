@@ -32,12 +32,20 @@ export default function AdminDashboard() {
           <section className="bg-white rounded-lg shadow p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Pages</h2>
-              <button
-                onClick={fetchPages}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-              >
-                Fetch Pages
-              </button>
+              <div className="flex gap-2">
+                <a
+                  href="/adm/page"
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition-colors inline-block"
+                >
+                  Add New Page
+                </a>
+                <button
+                  onClick={fetchPages}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors"
+                >
+                  Fetch Pages
+                </button>
+              </div>
             </div>
             {pages && pages.length > 0 ? (
               <ul className="space-y-4">
@@ -47,7 +55,7 @@ export default function AdminDashboard() {
                       href={page.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
+                      className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
                     >
                       {page.title}
                     </a>
