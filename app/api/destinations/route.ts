@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { title, content } = await req.json();
+    const { title, content, bloggerPageId, status = 'draft' } = await req.json();
 
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
         title,
         slug,
         content,
-        status: 'draft'
+        status,
+        bloggerPageId
       }
     });
 
