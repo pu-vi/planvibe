@@ -3,9 +3,21 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { title, content, bloggerPageId, status = 'draft' } = await req.json();
+    const { title, content, bloggerPageId, bloggerUrl, status = 'draft' } = await req.json();
 
-    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    let slug, canonicalUrl;
+    if (bloggerUrl) {
+      // Extract slug from blogger URL (e.g., "himachal-pradesh.html")
+      const urlParts = bloggerUrl.split('/p/');
+      slug = urlParts.length > 1 ? urlParts[1] : title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      
+      // Extract canonical URL path (e.g., "/p/himachal-pradesh.html")
+      const url = new URL(bloggerUrl);
+      canonicalUrl = url.pathname;
+    } else {
+      slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      canonicalUrl = null;
+    }
 
     const destination = await prisma.destination.create({
       data: {
@@ -13,7 +25,9 @@ export async function POST(req: NextRequest) {
         slug,
         content,
         status,
-        bloggerPageId
+        bloggerPageId,
+        bloggerUrl,
+        canonicalUrl
       }
     });
 

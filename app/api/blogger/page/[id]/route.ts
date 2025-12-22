@@ -19,6 +19,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
+    console.error("Error fetching page from Blogger API:", error);
     return NextResponse.json(
       { error: "Failed to fetch page" },
       { status: 500 }
