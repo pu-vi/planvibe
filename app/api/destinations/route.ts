@@ -19,19 +19,46 @@ export async function POST(req: NextRequest) {
       canonicalUrl = null;
     }
 
-    const destination = await prisma.destination.create({
-      data: {
-        title,
-        slug,
-        content,
-        status,
-        bloggerPageId,
-        bloggerUrl,
-        canonicalUrl
+    // Check if destination already exists by bloggerPageId or slug
+    const existing = await prisma.destination.findFirst({
+      where: {
+        OR: [
+          { bloggerPageId },
+          { slug }
+        ]
       }
     });
 
-    return NextResponse.json(destination);
+    if (existing) {
+      // Update existing destination
+      const destination = await prisma.destination.update({
+        where: { id: existing.id },
+        data: {
+          title,
+          slug,
+          content,
+          status,
+          bloggerPageId,
+          bloggerUrl,
+          canonicalUrl
+        }
+      });
+      return NextResponse.json(destination);
+    } else {
+      // Create new destination
+      const destination = await prisma.destination.create({
+        data: {
+          title,
+          slug,
+          content,
+          status,
+          bloggerPageId,
+          bloggerUrl,
+          canonicalUrl
+        }
+      });
+      return NextResponse.json(destination);
+    }
   } catch (error) {
     console.error(error);
     return NextResponse.json(
