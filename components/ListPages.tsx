@@ -116,6 +116,18 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                         </span>
                       )}
                     </div>
+                    {activeTab === "db" && (
+                      <div className="flex gap-2">
+                        <a
+                          href={`/p/${page.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 text-sm"
+                        >
+                          View
+                        </a>
+                      </div>
+                    )}
                     {activeTab === "blogger" && (
                       <div className="flex gap-2">
                         <a
