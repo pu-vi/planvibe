@@ -1,6 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import "../page.css";
 
 interface Destination {
   id: number;
@@ -13,7 +14,7 @@ interface Destination {
 export default function PageView() {
   const params = useParams();
   const slug = params.slug as string;
-  
+
   const [destination, setDestination] = useState<Destination | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -22,7 +23,7 @@ export default function PageView() {
     const fetchDestination = async () => {
       try {
         const response = await fetch(`/api/destinations/view/${slug}`);
-        
+
         if (response.ok) {
           const data = await response.json();
           setDestination(data);
@@ -42,32 +43,32 @@ export default function PageView() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div>Loading...</div>
       </div>
     );
   }
 
   if (notFound || !destination) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Page Not Found</h1>
-          <p className="text-gray-600">The page you're looking for doesn't exist.</p>
+          <h1 className="text-2xl font-bold mb-2">Page Not Found</h1>
+          <p>The page you&apos;re looking for doesn&apos;t exist.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <header className="border-b bg-white">
+    <div className="min-h-screen">
+      <header className="border-b">
         <div className="max-w-4xl mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">{destination.title}</h1>
+          <h1 className="text-3xl font-bold">{destination.title}</h1>
         </div>
       </header>
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <div 
+        <div
           className="prose max-w-none"
           dangerouslySetInnerHTML={{ __html: destination.content }}
         />

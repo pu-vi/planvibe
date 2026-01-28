@@ -57,7 +57,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow">
+    <div className="rounded-lg shadow">
       <div className="border-b">
         <div className="flex justify-between items-center p-4">
           <div className="flex space-x-1">
@@ -65,8 +65,8 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
               onClick={() => handleTabChange("db")}
               className={`px-4 py-2 rounded-md font-medium transition-colors ${
                 activeTab === "db"
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "bg-blue-800 text-white"
+                  : "hover:text-gray-400"
               }`}
             >
               Database Pages
@@ -75,8 +75,8 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
               onClick={() => handleTabChange("blogger")}
               className={`px-4 py-2 rounded-md font-medium transition-colors ${
                 activeTab === "blogger"
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "bg-blue-800 text-white"
+                  : "hover:text-gray-400"
               }`}
             >
               Blogger Pages
@@ -84,7 +84,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
           </div>
           <button
             onClick={onAddNew}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition-colors"
+            className="bg-green-800 hover:bg-green-900 text-white px-4 py-2 rounded-md font-medium transition-colors"
           >
             Add New Page
           </button>
@@ -93,7 +93,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
 
       <div className="p-4">
         {loading ? (
-          <div className="text-center py-8 text-gray-500">Loading...</div>
+          <div className="text-center py-8">Loading...</div>
         ) : pages.length > 0 ? (
           <>
             <div className="space-y-3">
@@ -101,15 +101,15 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                 <div key={page.id} className="border-b pb-3 last:border-b-0">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-medium text-gray-900">
+                      <h3 className="font-medium">
                         {page.title}
                       </h3>
                       {activeTab === "db" && page.status && (
                         <span
                           className={`inline-block px-2 py-1 text-xs rounded mt-1 ${
                             page.status === "published"
-                              ? "bg-green-100 text-green-800"
-                              : "bg-yellow-100 text-yellow-800"
+                              ? "bg-green-800 text-green-200"
+                              : "bg-yellow-800 text-yellow-200"
                           }`}
                         >
                           {page.status}
@@ -122,7 +122,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                           href={`/p/${page.slug}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-800 text-sm"
+                          className="text-blue-500 hover:text-blue-400 text-sm"
                         >
                           View
                         </a>
@@ -132,7 +132,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                       <div className="flex gap-2">
                         <a
                           href={`/adm/page/${page.id}`}
-                          className="text-green-600 hover:text-green-800 text-sm font-medium"
+                          className="text-green-500 hover:text-green-400 text-sm font-medium"
                         >
                           Edit
                         </a>
@@ -140,7 +140,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                           href={page.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-800 text-sm"
+                          className="text-blue-500 hover:text-blue-400 text-sm"
                         >
                           View
                         </a>
@@ -162,7 +162,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                 >
                   Previous
                 </button>
-                <span className="text-sm text-gray-600">
+                <span className="text-sm">
                   Page {currentPage} of {totalPages}
                 </span>
                 <button
@@ -178,9 +178,10 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
             )}
           </>
         ) : (
-          <div className="text-center py-8 text-gray-500">No pages found</div>
+          <div className="text-center py-8">No pages found</div>
         )}
       </div>
     </div>
   );
 }
+

@@ -1,9 +1,9 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import RichTextEditor from "../../../components/RichTextEditor";
-import { notify } from "../../../components/common/notify";
-import Input from "../../../components/ui/Input";
+import RichTextEditor from "@/components/RichTextEditor";
+import { notify } from "@/components/common/notify";
+import Input from "@/components/ui/Input";
 
 export default function PageEditor() {
   const searchParams = useSearchParams();
@@ -51,8 +51,8 @@ export default function PageEditor() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b">
+    <div className="min-h-screen">
+      <header className="border-b">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <h1 className="text-2xl font-bold">
             {isEdit ? "Edit Page" : "Add New Page"}
@@ -60,7 +60,7 @@ export default function PageEditor() {
         </div>
       </header>
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="rounded-lg shadow p-6">
           <div className="space-y-4">
             <Input
               label="Title"
@@ -70,7 +70,7 @@ export default function PageEditor() {
               placeholder="Enter page title"
             />
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2">
                 Content
               </label>
               <RichTextEditor content={content} onChange={setContent} />
@@ -78,13 +78,13 @@ export default function PageEditor() {
             <div className="flex gap-4">
               <button
                 onClick={handleSave}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors"
+                className="bg-blue-800 hover:bg-blue-900 text-white px-6 py-2 rounded-md font-medium transition-colors"
               >
                 {isEdit ? "Update" : "Create"} Page
               </button>
               <a
                 href="/adm"
-                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-md font-medium transition-colors inline-block"
+                className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded-md font-medium transition-colors inline-block"
               >
                 Cancel
               </a>

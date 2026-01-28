@@ -5,12 +5,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default function Input({ label, className = '', ...props }: InputProps) {
-  const baseClasses = "w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
+  const baseClasses = "w-full border border-gray-600 rounded-md px-3 py-2 bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
   
   return (
     <div>
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium mb-2">
           {label}
         </label>
       )}

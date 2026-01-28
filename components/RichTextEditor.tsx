@@ -29,13 +29,13 @@ function MenuBar({ editor }: { editor: Editor }) {
   });
 
   return (
-    <div className="border-b p-3 bg-gray-50 flex flex-wrap gap-1">
+    <div className="border-b p-3 bg-gray-800 flex flex-wrap gap-1">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isBold 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         Bold
@@ -44,8 +44,8 @@ function MenuBar({ editor }: { editor: Editor }) {
         onClick={() => editor.chain().focus().toggleItalic().run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isItalic 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         Italic
@@ -54,8 +54,8 @@ function MenuBar({ editor }: { editor: Editor }) {
         onClick={() => editor.chain().focus().toggleStrike().run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isStrike 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         Strike
@@ -64,19 +64,19 @@ function MenuBar({ editor }: { editor: Editor }) {
         onClick={() => editor.chain().focus().toggleCode().run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isCode 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         Code
       </button>
-      <div className="w-px bg-gray-300 mx-1"></div>
+      <div className="w-px bg-gray-600 mx-1"></div>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isHeading1 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         H1
@@ -85,8 +85,8 @@ function MenuBar({ editor }: { editor: Editor }) {
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isHeading2 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         H2
@@ -95,19 +95,19 @@ function MenuBar({ editor }: { editor: Editor }) {
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isHeading3 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         H3
       </button>
-      <div className="w-px bg-gray-300 mx-1"></div>
+      <div className="w-px bg-gray-600 mx-1"></div>
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isBulletList 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         • List
@@ -116,8 +116,8 @@ function MenuBar({ editor }: { editor: Editor }) {
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isOrderedList 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         1. List
@@ -126,24 +126,24 @@ function MenuBar({ editor }: { editor: Editor }) {
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
         className={`px-3 py-1 rounded text-sm font-medium border ${
           editorState.isBlockquote 
-            ? 'bg-blue-500 text-white border-blue-500' 
-            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            ? 'bg-blue-800 text-white border-blue-800' 
+            : 'bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600'
         }`}
       >
         Quote
       </button>
-      <div className="w-px bg-gray-300 mx-1"></div>
+      <div className="w-px bg-gray-600 mx-1"></div>
       <button
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editorState.canUndo}
-        className="px-3 py-1 rounded text-sm font-medium border bg-white text-gray-700 border-gray-300 hover:bg-gray-50 disabled:opacity-50"
+        className="px-3 py-1 rounded text-sm font-medium border bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600 disabled:opacity-50"
       >
         Undo
       </button>
       <button
         onClick={() => editor.chain().focus().redo().run()}
         disabled={!editorState.canRedo}
-        className="px-3 py-1 rounded text-sm font-medium border bg-white text-gray-700 border-gray-300 hover:bg-gray-50 disabled:opacity-50"
+        className="px-3 py-1 rounded text-sm font-medium border bg-gray-700 text-gray-200 border-gray-600 hover:bg-gray-600 disabled:opacity-50"
       >
         Redo
       </button>
@@ -170,7 +170,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
       <MenuBar editor={editor} />
       <EditorContent 
         editor={editor} 
-        className="prose max-w-none p-4 min-h-[400px] focus:outline-none bg-white text-gray-900"
+        className="prose max-w-none p-4 min-h-[400px] focus:outline-none"
       />
     </div>
   );
