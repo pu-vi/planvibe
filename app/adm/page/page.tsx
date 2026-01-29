@@ -78,13 +78,13 @@ export default function PageEditor() {
             <div className="flex gap-4">
               <button
                 onClick={handleSave}
-                className="bg-blue-800 hover:bg-blue-900 text-white px-6 py-2 rounded-md font-medium transition-colors"
+                className="bg-[#007BFF] hover:bg-[#0056B3] text-white px-6 py-2 rounded-md font-medium transition-colors"
               >
                 {isEdit ? "Update" : "Create"} Page
               </button>
               <a
                 href="/adm"
-                className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded-md font-medium transition-colors inline-block"
+                className="bg-gray-200 hover:bg-gray-300 text-[#212529] px-6 py-2 rounded-md font-medium transition-colors inline-block"
               >
                 Cancel
               </a>

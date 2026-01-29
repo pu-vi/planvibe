@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import "../page.css";
+
 
 interface Destination {
   id: number;
@@ -63,11 +63,11 @@ export default function PageView() {
   return (
     <div className="min-h-screen">
       <header className="border-b">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+        <div className="max-w-7xl mx-auto px-4 py-6">
           <h1 className="text-3xl font-bold">{destination.title}</h1>
         </div>
       </header>
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 py-8">
         <div
           className="prose max-w-none"
           dangerouslySetInnerHTML={{ __html: destination.content }}

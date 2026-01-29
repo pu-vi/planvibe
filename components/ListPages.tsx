@@ -57,16 +57,16 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
   };
 
   return (
-    <div className="rounded-lg shadow">
-      <div className="border-b">
+    <div className="bg-white rounded-lg shadow">
+      <div className="border-b border-gray-300">
         <div className="flex justify-between items-center p-4">
           <div className="flex space-x-1">
             <button
               onClick={() => handleTabChange("db")}
               className={`px-4 py-2 rounded-md font-medium transition-colors ${
                 activeTab === "db"
-                  ? "bg-blue-800 text-white"
-                  : "hover:text-gray-400"
+                  ? "bg-[#007BFF] text-white"
+                  : "text-[#212529] hover:text-gray-700"
               }`}
             >
               Database Pages
@@ -75,8 +75,8 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
               onClick={() => handleTabChange("blogger")}
               className={`px-4 py-2 rounded-md font-medium transition-colors ${
                 activeTab === "blogger"
-                  ? "bg-blue-800 text-white"
-                  : "hover:text-gray-400"
+                  ? "bg-[#007BFF] text-white"
+                  : "text-[#212529] hover:text-gray-700"
               }`}
             >
               Blogger Pages
@@ -84,7 +84,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
           </div>
           <button
             onClick={onAddNew}
-            className="bg-green-800 hover:bg-green-900 text-white px-4 py-2 rounded-md font-medium transition-colors"
+            className="bg-[#28A745] hover:bg-[#218838] text-white px-4 py-2 rounded-md font-medium transition-colors"
           >
             Add New Page
           </button>
@@ -93,23 +93,23 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
 
       <div className="p-4">
         {loading ? (
-          <div className="text-center py-8">Loading...</div>
+          <div className="text-center py-8 text-gray-500">Loading...</div>
         ) : pages.length > 0 ? (
           <>
             <div className="space-y-3">
               {pages.map((page) => (
-                <div key={page.id} className="border-b pb-3 last:border-b-0">
+                <div key={page.id} className="border-b border-gray-200 pb-3 last:border-b-0">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-medium">
+                      <h3 className="font-medium text-[#212529]">
                         {page.title}
                       </h3>
                       {activeTab === "db" && page.status && (
                         <span
                           className={`inline-block px-2 py-1 text-xs rounded mt-1 ${
                             page.status === "published"
-                              ? "bg-green-800 text-green-200"
-                              : "bg-yellow-800 text-yellow-200"
+                              ? "bg-[#28A745] text-white"
+                              : "bg-[#FFC107] text-gray-900"
                           }`}
                         >
                           {page.status}
@@ -122,7 +122,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                           href={`/p/${page.slug}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-500 hover:text-blue-400 text-sm"
+                          className="text-[#007BFF] hover:text-[#0056B3] text-sm"
                         >
                           View
                         </a>
@@ -132,7 +132,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                       <div className="flex gap-2">
                         <a
                           href={`/adm/page/${page.id}`}
-                          className="text-green-500 hover:text-green-400 text-sm font-medium"
+                          className="text-[#28A745] hover:text-[#218838] text-sm font-medium"
                         >
                           Edit
                         </a>
@@ -140,7 +140,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                           href={page.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-500 hover:text-blue-400 text-sm"
+                          className="text-[#007BFF] hover:text-[#0056B3] text-sm"
                         >
                           View
                         </a>
@@ -158,11 +158,11 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                     setCurrentPage((prev) => Math.max(prev - 1, 1))
                   }
                   disabled={currentPage === 1}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
+                  className="px-3 py-1 border rounded disabled:opacity-50 border-gray-300 bg-white text-gray-700"
                 >
                   Previous
                 </button>
-                <span className="text-sm">
+                <span className="text-sm text-[#212529]">
                   Page {currentPage} of {totalPages}
                 </span>
                 <button
@@ -170,7 +170,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                   }
                   disabled={currentPage === totalPages}
-                  className="px-3 py-1 border rounded disabled:opacity-50"
+                  className="px-3 py-1 border rounded disabled:opacity-50 border-gray-300 bg-white text-gray-700"
                 >
                   Next
                 </button>
@@ -178,7 +178,7 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
             )}
           </>
         ) : (
-          <div className="text-center py-8">No pages found</div>
+          <div className="text-center py-8 text-gray-500">No pages found</div>
         )}
       </div>
     </div>
