@@ -1,26 +1,212 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #F8F9FA; /* Very Light Gray */
+  --foreground: #212529; /* Dark Charcoal */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Light-themed Travel Blog Styling */
+
+#wwp-destination {
+  /* max-width: 900px; */
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #F8F9FA; /* New primary background */
+  color: #212529; /* New foreground color */
+  line-height: 1.8;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+}
+
+/* Headings */
+#wwp-destination h1 {
+  color: #212529; /* New foreground color */
+  font-size: 2.5em;
+  margin: 30px 0 20px 0;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #007BFF; /* Main blue accent */
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+#wwp-destination h2 {
+  color: #007BFF; /* Main blue accent */
+  font-size: 1.8em;
+  margin: 35px 0 15px 0;
+  padding-top: 20px;
+  font-weight: 600;
+}
+
+#wwp-destination h3 {
+  color: #212529; /* Primary foreground color for better contrast */
+  font-size: 1.3em;
+  margin: 20px 0 12px 0;
+  font-weight: 500;
+}
+
+/* Paragraphs */
+#wwp-destination p {
+  margin: 15px 0;
+  text-align: justify;
+  color: #212529; /* New foreground color */
+  font-size: 1.05em;
+}
+
+#wwp-destination p strong {
+  color: #212529; /* New foreground color */
+  font-weight: 600;
+}
+
+/* Lists */
+#wwp-destination ul {
+  margin: 20px 0;
+  padding-left: 30px;
+  list-style: none;
+}
+
+#wwp-destination ul li {
+  margin: 12px 0;
+  padding-left: 20px;
+  position: relative;
+  color: #212529; /* New foreground color */
+  line-height: 1.7;
+}
+
+#wwp-destination ul li:before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #007BFF; /* Main blue accent */
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+#wwp-destination ul li strong {
+  color: #212529; /* New foreground color */
+}
+
+/* Separator & Images */
+#wwp-destination .separator {
+  margin: 40px 0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+#wwp-destination .separator a {
+  display: block;
+  padding: 1em 0;
+  transition: opacity 0.3s ease;
+}
+
+#wwp-destination .separator a:hover {
+  opacity: 0.8;
+}
+
+#wwp-destination img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Lighter shadow for light theme */
+  border: 1px solid #dee2e6; /* Lighter border */
+  transition: transform 0.3s ease;
+}
+
+#wwp-destination img:hover {
+  transform: scale(1.02);
+}
+
+/* Horizontal Rules */
+#wwp-destination hr {
+  margin: 35px 0;
+  border: none;
+  border-top: 2px solid #dee2e6; /* Lighter border */
+  background: linear-gradient(to right, transparent, #007BFF, transparent); /* Main blue accent */
+  height: 1px;
+}
+
+/* Strong text emphasis */
+#wwp-destination strong {
+  color: #212529; /* New foreground color */
+  font-weight: 600;
+}
+
+/* Links */
+#wwp-destination a {
+  color: #007BFF; /* Main blue accent */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#wwp-destination a:hover {
+  color: #28A745; /* Green accent for hover */
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #wwp-destination {
+    padding: 20px 15px;
+  }
+
+  #wwp-destination h1 {
+    font-size: 1.8em;
+    margin: 20px 0 15px 0;
+  }
+
+  #wwp-destination h2 {
+    font-size: 1.4em;
+    margin: 25px 0 12px 0;
+  }
+
+  #wwp-destination h3 {
+    font-size: 1.1em;
+  }
+
+  #wwp-destination p {
+    font-size: 1em;
+    text-align: left;
+  }
+
+  #wwp-destination ul {
+    padding-left: 20px;
+  }
+
+  #wwp-destination ul li {
+    padding-left: 15px;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  #wwp-destination {
+    padding: 15px 10px;
+  }
+
+  #wwp-destination h1 {
+    font-size: 1.5em;
+  }
+
+  #wwp-destination h2 {
+    font-size: 1.2em;
+  }
+
+  #wwp-destination h3 {
+    font-size: 1em;
+  }
+
+  #wwp-destination .separator a {
+    padding: 0.5em 0;
+  }
+
+  #wwp-destination img {
+    height: auto;
+    max-height: 250px;
+  }
 }
