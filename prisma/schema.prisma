@@ -6,41 +6,132 @@ datasource db {
   provider = "postgresql"
 }
 
+model Country {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  slug      String  @unique
+  sortOrder Int     @default(0)
+
+  states    State[]
+}
+
+model State {
+  id        Int     @id @default(autoincrement())
+  name      String
+  slug      String  @unique
+  sortOrder Int     @default(0)
+
+  countryId Int
+  country   Country @relation(fields: [countryId], references: [id])
+
+  externalPageId Int?
+  externalPage   ExternalPage? @relation(fields: [externalPageId], references: [id])
+
+  cities    City[]
+
+  @@unique([countryId, name])
+  @@index([countryId, sortOrder])
+}
+
+model City {
+  id        Int     @id @default(autoincrement())
+  name      String
+  slug      String
+  sortOrder Int     @default(0)
+
+  stateId   Int
+  state     State @relation(fields: [stateId], references: [id])
+
+  externalPageId Int?
+  externalPage   ExternalPage? @relation(fields: [externalPageId], references: [id])
+
+  destinations Destination[]
+
+  @@unique([stateId, name])
+  @@index([stateId, sortOrder])
+}
+
+model AttractionType {
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  slug      String @unique
+  sortOrder Int    @default(0)
+
+  externalPageId Int?
+  externalPage   ExternalPage? @relation(fields: [externalPageId], references: [id])
+
+  destinations DestinationAttractionType[]
+}
+
 model Destination {
-  id                  Int       @id @default(autoincrement())
-  title               String    @db.VarChar(255)
-  slug                String    @unique @db.VarChar(255)
-  content             String    @db.Text
-  excerpt             String?   @db.Text
-  publishedAt         DateTime? @map("published_at")
-  updatedAt           DateTime  @default(now()) @updatedAt @map("updated_at")
-  
-  // SEO Fields
-  metaTitle           String?   @map("meta_title") @db.VarChar(255)
-  metaDescription     String?   @map("meta_description") @db.Text
-  metaKeywords        String?   @map("meta_keywords") @db.Text
-  canonicalUrl        String?   @map("canonical_url") @db.VarChar(255)
-  
-  // Open Graph / Social Media Fields
-  ogTitle             String?   @map("og_title") @db.VarChar(255)
-  ogDescription       String?   @map("og_description") @db.VarChar(255)
-  ogImageUrl          String?   @map("og_image_url") @db.VarChar(255)
-  
-  // Technical / Indexing
-  robotsNoindex       Boolean   @default(false) @map("robots_noindex")
-  robotsNofollow      Boolean   @default(false) @map("robots_nofollow")
-  
-  // Travel-specific UX
-  featuredImageUrl    String?   @map("featured_image_url") @db.VarChar(255)
-  travelSeason        String?   @map("travel_season") @db.VarChar(50)
-  bestTimeToVisit     String?   @map("best_time_to_visit") @db.VarChar(100)
-  
-  // Blogger details
-  bloggerPageId       String?   @map("blogger_page_id") @db.VarChar(100)
-  bloggerUrl          String?   @map("blogger_url") @db.VarChar(255)
-  bloggerUpdatedAt    DateTime? @map("blogger_updated_at")
-  
-  status              String    @default("draft") @db.VarChar(50)
-  
+  id               Int       @id @default(autoincrement())
+  title            String    @db.VarChar(255)
+  slug             String    @unique @db.VarChar(255)
+  content          String    @db.Text
+  excerpt          String?   @db.Text
+
+  cityId           Int
+  city             City @relation(fields: [cityId], references: [id])
+
+  sortOrder        Int       @default(0)
+
+  // SEO
+  metaTitle        String?   @map("meta_title") @db.VarChar(255)
+  metaDescription  String?   @map("meta_description") @db.Text
+  metaKeywords     String?   @map("meta_keywords") @db.Text
+  canonicalUrl     String?   @map("canonical_url") @db.VarChar(255)
+
+  // Open Graph
+  ogTitle          String?   @map("og_title") @db.VarChar(255)
+  ogDescription    String?   @map("og_description") @db.VarChar(255)
+  ogImageUrl       String?   @map("og_image_url") @db.VarChar(255)
+
+  // UX
+  featuredImageUrl String?   @map("featured_image_url") @db.VarChar(255)
+  travelSeason     String?   @map("travel_season") @db.VarChar(50)
+  bestTimeToVisit  String?   @map("best_time_to_visit") @db.VarChar(100)
+
+  // Publishing
+  publishedAt      DateTime? @map("published_at")
+  updatedAt        DateTime  @default(now()) @updatedAt @map("updated_at")
+  status           String    @default("draft") @db.VarChar(50)
+
+  // External source
+  externalPageId   Int?
+  externalPage     ExternalPage? @relation(fields: [externalPageId], references: [id])
+
+  attractionTypes  DestinationAttractionType[]
+
+  @@index([cityId, sortOrder])
+  @@index([cityId, status])
   @@map("destinations")
 }
+
+model DestinationAttractionType {
+  destinationId    Int
+  attractionTypeId Int
+
+  destination      Destination    @relation(fields: [destinationId], references: [id])
+  attractionType   AttractionType @relation(fields: [attractionTypeId], references: [id])
+
+  @@id([destinationId, attractionTypeId])
+}
+
+model ExternalPage {
+  id             Int      @id @default(autoincrement())
+  provider       String   // "blogger"
+  externalPageId String   @unique
+  url            String
+  pageType       String   // COUNTRY | STATE | CITY | ATTRACTION | DESTINATION
+  title          String?
+  slug           String?
+
+  publishedAt    DateTime?
+  lastSyncedAt   DateTime?
+
+  states         State[]
+  cities         City[]
+  attractions    AttractionType[]
+  destinations   Destination[]
+}
+
