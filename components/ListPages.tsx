@@ -20,14 +20,24 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  // Blogger pagination tokens
+  const [bloggerNextToken, setBloggerNextToken] = useState<string | null>(null);
+  const [bloggerPrevTokens, setBloggerPrevTokens] = useState<string[]>([]); // stack of previous tokens
 
-  const fetchPages = async (source: "db" | "blogger", page: number = 1) => {
+  const fetchPages = async (
+    source: "db" | "blogger",
+    page: number = 1,
+    pageToken?: string | null,
+  ) => {
     setLoading(true);
     try {
-      const url =
-        source === "db"
-          ? `/api/destinations/list?page=${page}&limit=10`
-          : `/api/blogger/page?maxResults=10`;
+      let url = "";
+      if (source === "db") {
+        url = `/api/destinations/list?page=${page}&limit=10`;
+      } else {
+        url = `/api/blogger/page?maxResults=20`;
+        if (pageToken) url += `&pageToken=${pageToken}`;
+      }
 
       const response = await fetch(url);
       const data = await response.json();
@@ -37,23 +47,58 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
         setTotalPages(data.totalPages || 1);
       } else {
         setPages(data.items || []);
-        setTotalPages(1); // Blogger API doesn't provide pagination info
+        setBloggerNextToken(data.nextPageToken || null);
+        // Blogger API does not provide total count, so we can't set totalPages
       }
     } catch (error) {
       console.error("Error fetching pages:", error);
       setPages([]);
+      if (source === "blogger") {
+        setBloggerNextToken(null);
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPages(activeTab, currentPage);
-  }, [activeTab, currentPage]);
+    if (activeTab === "db") {
+      fetchPages("db", currentPage);
+    } else {
+      // On tab switch, reset tokens
+      fetchPages("blogger", 1, undefined);
+      setBloggerPrevTokens([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
+
+  // For DB tab, handle page change
+  useEffect(() => {
+    if (activeTab === "db") {
+      fetchPages("db", currentPage);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
   const handleTabChange = (tab: "db" | "blogger") => {
     setActiveTab(tab);
     setCurrentPage(1);
+  };
+
+  // Blogger pagination handlers
+  const handleBloggerNext = () => {
+    setBloggerPrevTokens((prev) => [...prev, bloggerNextToken || ""]);
+    fetchPages("blogger", 1, bloggerNextToken);
+  };
+  const handleBloggerPrev = () => {
+    setBloggerPrevTokens((prev) => {
+      const newTokens = [...prev];
+      newTokens.pop();
+      const prevToken =
+        newTokens.length > 0 ? newTokens[newTokens.length - 1] : undefined;
+      fetchPages("blogger", 1, prevToken);
+      return newTokens;
+    });
   };
 
   return (
@@ -98,7 +143,10 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
           <>
             <div className="space-y-3">
               {pages.map((page) => (
-                <div key={page.id} className="border-b border-gray-200 pb-3 last:border-b-0">
+                <div
+                  key={page.id}
+                  className="border-b border-gray-200 pb-3 last:border-b-0"
+                >
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="font-medium text-[#212529]">
@@ -176,6 +224,25 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
                 </button>
               </div>
             )}
+            {activeTab === "blogger" && (
+              <div className="flex justify-center items-center space-x-2 mt-6">
+                <button
+                  onClick={handleBloggerPrev}
+                  disabled={bloggerPrevTokens.length === 0}
+                  className="px-3 py-1 border rounded disabled:opacity-50 border-gray-300 bg-white text-gray-700"
+                >
+                  Previous
+                </button>
+                <span className="text-sm text-[#212529]">Blogger Pages</span>
+                <button
+                  onClick={handleBloggerNext}
+                  disabled={!bloggerNextToken}
+                  className="px-3 py-1 border rounded disabled:opacity-50 border-gray-300 bg-white text-gray-700"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </>
         ) : (
           <div className="text-center py-8 text-gray-500">No pages found</div>
@@ -184,4 +251,3 @@ export default function ListPages({ onAddNew }: ListPagesProps) {
     </div>
   );
 }
-
